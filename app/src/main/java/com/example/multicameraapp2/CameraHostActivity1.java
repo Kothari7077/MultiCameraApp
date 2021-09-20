@@ -117,7 +117,6 @@ public class CameraHostActivity1 extends AppCompatActivity implements SurfaceHol
            public void surfaceChanged(SurfaceHolder holder1, int format, int width, int height) {
 
            }
-
            @Override
            public void surfaceCreated(SurfaceHolder holder1) {
                mp1.setDisplay(holder1);
@@ -131,32 +130,123 @@ public class CameraHostActivity1 extends AppCompatActivity implements SurfaceHol
        sv1.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-
-               if(count%2==0) {
-                   //Swap to be performed here but not able to access cameraManager and surface holder
-                   //also tried few methods like closing camera, starting a new surface view but still not working
+//               if(count%2==0){
 //                   mp1.release();
 //                   mp1 = MediaPlayer.create(CameraHostActivity1.this, R.raw.usain_bolt);
 //                   mp1.setDisplay(holder1);
 //                   mp1.start();
-                   txt1.setText("Me");
 //                   mp.release();
 //                   mp = MediaPlayer.create(CameraHostActivity1.this, R.raw.danny_makaskil);
 //                   mp.setDisplay(holder);
 //                   mp.start();
-                   txt.setText(t1);
-               }
-               else{
+//               }
+//               else{
 //                   mp1.release();
 //                   mp1 = MediaPlayer.create(CameraHostActivity1.this, R.raw.danny_makaskil);
 //                   mp1.setDisplay(holder1);
 //                   mp1.start();
-                   txt1.setText(t1);
 //                   mp.release();
 //                   mp = MediaPlayer.create(CameraHostActivity1.this, R.raw.usain_bolt);
 //                   mp.setDisplay(holder);
 //                   mp.start();
-                   txt.setText("Me");
+//               }
+               //Approach 1
+//               if(count%2==0) {
+//
+//                   mCameraDevice.close();
+//                   mp1.release();
+//                   mSurfaceView = findViewById(R.id.videoView1);
+//                   mSurfaceHolder = mSurfaceView.getHolder();
+//                   mSurfaceHolder.addCallback(CameraHostActivity1.this);
+//                   try {
+//                       mCameraIDsList = mCameraManager.getCameraIdList();
+//                   } catch (CameraAccessException e) {
+//                       e.printStackTrace();
+//                   }
+//                   mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+//                   mCameraStateCB = new CameraDevice.StateCallback() {
+//                       @Override
+//                       public void onOpened(CameraDevice camera) {
+//                           mCameraDevice = camera;
+//                           mHandler.sendEmptyMessage(MSG_CAMERA_OPENED);
+//                       }
+//                       @Override
+//                       public void onDisconnected(CameraDevice camera) {
+//                       }
+//                       @Override
+//                       public void onError(CameraDevice camera, int error) {
+//                       }
+//                   };
+//                   mp1 = MediaPlayer.create(CameraHostActivity1.this, R.raw.usain_bolt);
+//                   SurfaceView sv1 = (SurfaceView) findViewById(R.id.videoViewMain);
+//                   SurfaceHolder holder1 = sv1.getHolder();
+//                   holder1.addCallback(new SurfaceHolder.Callback(){
+//                       @Override
+//                       public void surfaceChanged(SurfaceHolder holder1, int format, int width, int height) { }
+//
+//                       @Override
+//                       public void surfaceCreated(SurfaceHolder holder1) {
+//                           mp1.setDisplay(holder1);
+//                           mp1.start();
+//                       }
+//                       @Override
+//                       public void surfaceDestroyed(SurfaceHolder holder1) { }
+//                   });
+//                   txt.setText(t1);
+//                   txt1.setText("Me");
+//               }
+//               else{
+//                   mCameraDevice.close();
+//                   mp1.release();
+//                   mSurfaceView = findViewById(R.id.videoViewMain);
+//                   mSurfaceHolder = mSurfaceView.getHolder();
+//                   mSurfaceHolder.addCallback(CameraHostActivity1.this);
+//                   mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+//                   mCameraStateCB = new CameraDevice.StateCallback() {
+//                       @Override
+//                       public void onOpened(CameraDevice camera) {
+//                           mCameraDevice = camera;
+//                           mHandler.sendEmptyMessage(MSG_CAMERA_OPENED);
+//                       }
+//                       @Override
+//                       public void onDisconnected(CameraDevice camera) {
+//                           Toast.makeText(getApplicationContext(), "onDisconnected", Toast.LENGTH_SHORT).show();
+//                       }
+//                       @Override
+//                       public void onError(CameraDevice camera, int error) {
+//                           Toast.makeText(getApplicationContext(), "onError", Toast.LENGTH_SHORT).show();
+//                       }
+//                   };
+//                   txt1.setText("Me");
+//                   mp1 = MediaPlayer.create(CameraHostActivity1.this, R.raw.usain_bolt);
+//                   SurfaceView sv1 = (SurfaceView) findViewById(R.id.videoView1);
+//                   SurfaceHolder holder = sv1.getHolder();
+//                   holder.addCallback(new SurfaceHolder.Callback(){
+//                       @Override
+//                       public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
+//
+//                       @Override
+//                       public void surfaceCreated(SurfaceHolder holder) {
+//                           mp1.setDisplay(holder);
+//                           mp1.start();
+//                       }
+//                       @Override
+//                       public void surfaceDestroyed(SurfaceHolder holder) { }
+//                   });
+//                   txt1.setText(t1);
+//                   txt.setText("Me");
+//               }
+
+               //Approach2
+               if(count%2==0){
+                   mCameraDevice.close();
+                   mp1.release();
+                   mSurfaceView = findViewById(R.id.videoView1);
+
+
+               }
+               else{
+
                }
                count++;
            }
@@ -165,13 +255,11 @@ public class CameraHostActivity1 extends AppCompatActivity implements SurfaceHol
     @Override
     protected void onPause(){
         super.onPause();
-
-        if(null != mp) mp.release();
-        if(null != mp1) mp1.release();
+        if(null != mp)
+            mp.release();
+        if(null != mp1)
+            mp1.release();
     }
-
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -192,7 +280,6 @@ public class CameraHostActivity1 extends AppCompatActivity implements SurfaceHol
             }
         }
     }
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -222,9 +309,9 @@ public class CameraHostActivity1 extends AppCompatActivity implements SurfaceHol
         switch (msg.what) {
             case MSG_CAMERA_OPENED:
             case MSG_SURFACE_READY:
-                // if both surface is created and camera device is opened
-                // - ready to set up preview and other things
+                Toast.makeText(this,""+mSurfaceCreated+" "+mCameraDevice+" "+mIsCameraConfigured,Toast.LENGTH_SHORT).show();
                 if (mSurfaceCreated && (mCameraDevice != null) && !mIsCameraConfigured) {
+                    Toast.makeText(this,""+mSurfaceCreated+" "+mCameraDevice+" "+mIsCameraConfigured,Toast.LENGTH_SHORT).show();
                     configureCamera();
                 }
                 break;
