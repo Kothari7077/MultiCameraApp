@@ -26,24 +26,26 @@ public class SubscriberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subscriber);
         mStartDiscovery = (Button) findViewById(R.id.start_discovery);
 
-
+        ArrayList<String> selecteditems = new ArrayList<>();
 
         mStartDiscovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create and show the alert dialog
-                if(mStartDiscovery.getText().equals("START DISCOVERY")){
 
+                if(mStartDiscovery.getText().equals("START DISCOVERY")){
+                    selecteditems.clear();
                     // Set up the alert builder
                     AlertDialog.Builder builder = new AlertDialog.Builder(SubscriberActivity.this);
-                    builder.setTitle("Available Devices");
+                    builder.setTitle("Nearby Devices");
                     // Add a checkbox list
-                    String[] devices = {"Device 1 ", "Device 2", "Device 3"};
-                    ArrayList<String> selecteditems = new ArrayList<>();
+                    String[] devices = {"Device 1", "Device 2", "Device 3"};
 
                     builder.setMultiChoiceItems(devices, null, new DialogInterface.OnMultiChoiceClickListener() {
+
                         @Override
                         public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
                             // The user checked or unchecked a box
                             if(isChecked){
                                 selecteditems.add(devices[which]);
@@ -59,25 +61,35 @@ public class SubscriberActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             // The user clicked OK
                             count = selecteditems.size();
+                            mStartDiscovery.setText("START CAMERA");
                         }
                     });
                     builder.setNegativeButton("Cancel", null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    mStartDiscovery.setText("Start Camera");
+                    setButtonSize(dialog);
 
-                }else if(mStartDiscovery.getText().equals("Start Camera")){
+                }else if(mStartDiscovery.getText().equals("START CAMERA")){
                     if (hasCameraPermission()) {
 
                         if(count==3){
-                            enableCamera3();
+
+                            Intent intent = new Intent(SubscriberActivity.this, CameraHostActivity3.class);
+                            intent.putExtra("string",selecteditems);
+                            startActivity(intent);
                         }
                         else if(count==2){
-                            enableCamera2();
+                            Intent intent = new Intent(SubscriberActivity.this, CameraHostActivity2.class);
+                            intent.putExtra("string",selecteditems);
+                            startActivity(intent);
+                        }
+                        else if(count==1){
+                            Intent intent = new Intent(SubscriberActivity.this, CameraHostActivity1.class);
+                            intent.putExtra("string",selecteditems);
+                            startActivity(intent);
                         }
                         else{
-                            //Toast.makeText(SubsriberActivity.this,"count = "+count,Toast.LENGTH_SHORT).show();
-                            enableCamera1();
+                            mStartDiscovery.setText("START DISCOVERY");
                         }
                     } else {
                         requestPermission();
@@ -94,7 +106,19 @@ public class SubscriberActivity extends AppCompatActivity {
         });
     }
 
-
+    private void setButtonSize(AlertDialog dialog) {
+        Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button button1 = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        int i = getResources().getColor(R.color.blue);
+        button.setTextColor(i);
+        button1.setTextColor(i);
+        int height = getResources().getDimensionPixelSize(R.dimen.alertdialog_button_height);
+        int width  = getResources().getDimensionPixelSize(R.dimen.alertdialog_button_width);
+        button.setHeight(height);
+        button.setWidth(width);
+        button1.setHeight(height);
+        button1.setWidth(width);
+    }
     private boolean hasCameraPermission() {
         return ContextCompat.checkSelfPermission(
                 this,
@@ -107,18 +131,5 @@ public class SubscriberActivity extends AppCompatActivity {
                 CAMERA_PERMISSION,
                 CAMERA_REQUEST_CODE
         );
-    }
-    private void enableCamera1() {
-        Intent intent = new Intent(SubscriberActivity.this, CameraHostActivity1.class);
-        startActivity(intent);
-    }
-
-    private void enableCamera2() {
-        Intent intent = new Intent(SubscriberActivity.this, CameraHostActivity2.class);
-        startActivity(intent);
-    }
-    private void enableCamera3() {
-        Intent intent = new Intent(SubscriberActivity.this, CameraHostActivity3.class);
-        startActivity(intent);
     }
 }

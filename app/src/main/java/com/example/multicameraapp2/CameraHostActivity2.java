@@ -9,6 +9,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CameraHostActivity2 extends AppCompatActivity  {
     MediaPlayer mp,mp1,mp2;
     int count=0,count1=0;
@@ -18,9 +21,16 @@ public class CameraHostActivity2 extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_host2);
+        ArrayList<String> selectedItems = (ArrayList<String>) getIntent().getSerializableExtra("string");
+        String[] a= selectedItems.toArray(new String[0]);
+        Arrays.sort(a);
+        String t1=a[0],t2=a[1];
         txt = (TextView) findViewById(R.id.text);
         txt1 =(TextView) findViewById(R.id.text1);
         txt2 =(TextView) findViewById(R.id.text2);
+
+        txt1.setText(t1);
+        txt2.setText(t2);
         mp = MediaPlayer.create(this, R.raw.usain_bolt);
         SurfaceView sv = (SurfaceView) findViewById(R.id.videoViewMain);
         SurfaceHolder holder = sv.getHolder();
@@ -88,14 +98,14 @@ public class CameraHostActivity2 extends AppCompatActivity  {
                         mp = MediaPlayer.create(CameraHostActivity2.this, R.raw.danny_makaskil);
                         mp.setDisplay(holder);
                         mp.start();
-                        txt.setText("Device 1");
+                        txt.setText(t1);
                         break;
                     case 3:
                         mp.release();
                         mp = MediaPlayer.create(CameraHostActivity2.this, R.raw.fisica);
                         mp.setDisplay(holder);
                         mp.start();
-                        txt.setText("Device 2");
+                        txt.setText(t2);
                         break;
                 }
                 switch(arr[1]){
@@ -111,14 +121,14 @@ public class CameraHostActivity2 extends AppCompatActivity  {
                         mp1 = MediaPlayer.create(CameraHostActivity2.this, R.raw.danny_makaskil);
                         mp1.setDisplay(holder1);
                         mp1.start();
-                        txt1.setText("Device 1");
+                        txt1.setText(t1);
                         break;
                     case 3:
                         mp1.release();
                         mp1 = MediaPlayer.create(CameraHostActivity2.this, R.raw.fisica);
                         mp1.setDisplay(holder1);
                         mp1.start();
-                        txt1.setText("Device 2");
+                        txt1.setText(t2);
                         break;
                 }
             }
@@ -143,14 +153,14 @@ public class CameraHostActivity2 extends AppCompatActivity  {
                         mp = MediaPlayer.create(CameraHostActivity2.this, R.raw.danny_makaskil);
                         mp.setDisplay(holder);
                         mp.start();
-                        txt.setText("Device 1");
+                        txt.setText(t1);
                         break;
                     case 3:
                         mp.release();
                         mp = MediaPlayer.create(CameraHostActivity2.this, R.raw.fisica);
                         mp.setDisplay(holder);
                         mp.start();
-                        txt.setText("Device 2");
+                        txt.setText(t2);
                         break;
                 }
                 switch(arr[2]){
@@ -166,14 +176,14 @@ public class CameraHostActivity2 extends AppCompatActivity  {
                         mp2 = MediaPlayer.create(CameraHostActivity2.this, R.raw.danny_makaskil);
                         mp2.setDisplay(holder2);
                         mp2.start();
-                        txt2.setText("Device 1");
+                        txt2.setText(t1);
                         break;
                     case 3:
                         mp2.release();
                         mp2 = MediaPlayer.create(CameraHostActivity2.this, R.raw.fisica);
                         mp2.setDisplay(holder2);
                         mp2.start();
-                        txt2.setText("Device 2");
+                        txt2.setText(t2);
                         break;
                 }
             }

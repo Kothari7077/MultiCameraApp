@@ -33,18 +33,17 @@
 
             <TextView
                 android:id="@+id/text"
-                android:textColor="@color/white"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:fontFamily="@font/bigshot_one"
-                android:paddingStart="120dp"
                 android:text="Me"
                 android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textSize="36sp" />
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="match_parent" />
+<!--            <ImageView-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="match_parent" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -65,12 +64,12 @@
 
                 <TextView
                     android:id="@+id/text1"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
+                    android:layout_width="93dp"
                     android:layout_height="25dp"
                     android:fontFamily="@font/bigshot_one"
-                    android:paddingStart="15dp"
                     android:text="Device 1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -87,12 +86,12 @@
 
                 <TextView
                     android:id="@+id/text2"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
+                    android:layout_width="93dp"
                     android:layout_height="25dp"
                     android:fontFamily="@font/bigshot_one"
-                    android:paddingStart="15dp"
+                    android:textAlignment="center"
                     android:text="Device 2"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>

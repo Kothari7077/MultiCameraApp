@@ -67,9 +67,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         mCameraStateCB = new CameraDevice.StateCallback() {
             @Override
             public void onOpened(CameraDevice camera) {
-                Toast.makeText(getApplicationContext(), "onOpened", Toast.LENGTH_SHORT).show();
                 mCameraDevice = camera;
                 mHandler.sendEmptyMessage(MSG_CAMERA_OPENED);
+                //check for swap camera here
             }
             @Override
             public void onDisconnected(CameraDevice camera) {
@@ -84,8 +84,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     @Override
     protected void onStart() {
         super.onStart();
-
-        //requesting permission
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
@@ -95,10 +93,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 Toast.makeText(getApplicationContext(), "request permission", Toast.LENGTH_SHORT).show();
             }
         } else {
-            //Toast.makeText(getApplicationContext(), "PERMISSION_ALREADY_GRANTED", Toast.LENGTH_SHORT).show();
             try {
                 count++;
-                mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
@@ -117,10 +114,8 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
             mIsCameraConfigured = false;
         } catch (final CameraAccessException e) {
-            // Doesn't matter, closing device anyway
             e.printStackTrace();
         } catch (final IllegalStateException e2) {
-            // Doesn't matter, closing device anyway
             e2.printStackTrace();
         } finally {
             if (mCameraDevice != null) {
@@ -136,8 +131,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         switch (msg.what) {
             case MSG_CAMERA_OPENED:
             case MSG_SURFACE_READY:
-                // if both surface is created and camera device is opened
-                // - ready to set up preview and other things
                 if (mSurfaceCreated && (mCameraDevice != null) && !mIsCameraConfigured) {
                     configureCamera();
                 }
@@ -167,7 +160,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
                     try {
                         count++;
-                        mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                        mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
                     } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }

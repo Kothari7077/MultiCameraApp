@@ -3,7 +3,7 @@
     package="com.example.multicameraapp2">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.Camera.any" />
 
@@ -14,15 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MultiCameraApp2.NoActionBar">
-        <activity android:name=".CameraHostActivity3">
-
-        </activity>
-        <activity android:name=".CameraHostActivity2" >
-
-        </activity>
-        <activity android:name=".CameraHostActivity1">
-
-        </activity>
+        <activity android:name=".HomeScreen"></activity>
+        <activity android:name=".CameraHostActivity3"></activity>
+        <activity android:name=".CameraHostActivity2"></activity>
+        <activity android:name=".CameraHostActivity1"></activity>
         <activity android:name=".CameraActivity" />
         <activity android:name=".SubscriberActivity" />
         <activity android:name=".CasterActivity" />
