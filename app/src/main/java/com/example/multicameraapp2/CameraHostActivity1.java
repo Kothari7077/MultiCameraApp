@@ -237,16 +237,63 @@ public class CameraHostActivity1 extends AppCompatActivity implements SurfaceHol
 //                   txt.setText("Me");
 //               }
 
-               //Approach2
+               //Approach2 captureDevice and captureSession setting to null maybe they have something to do as mHandle is not being called
+//               //addCallback is not being called
+//               if(count%2==0){
+//                   mCameraDevice.close();
+//                   mCameraDevice = null;
+//                   mCaptureSession = null;
+//                   mp1.release();
+//                   mSurfaceView = findViewById(R.id.videoView1);
+//                   mSurfaceHolder = mSurfaceView.getHolder();
+//                   mSurfaceHolder.addCallback(CameraHostActivity1.this);
+//                   mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+//                   mCameraStateCB = new CameraDevice.StateCallback() {
+//                       @Override
+//                       public void onOpened(CameraDevice camera) {
+//                           mCameraDevice = camera;
+//                           mHandler.sendEmptyMessage(MSG_CAMERA_OPENED);
+//                       }
+//                       @Override
+//                       public void onDisconnected(CameraDevice camera) {
+//                       }
+//                       @Override
+//                       public void onError(CameraDevice camera, int error) {
+//                       }
+//                   };
+//                   mp1 = MediaPlayer.create(CameraHostActivity1.this, R.raw.usain_bolt);
+//                   SurfaceView sv1 = (SurfaceView) findViewById(R.id.videoViewMain);
+//                   SurfaceHolder holder1 = sv1.getHolder();
+//                   holder1.addCallback(new SurfaceHolder.Callback(){
+//                       @Override
+//                       public void surfaceChanged(SurfaceHolder holder1, int format, int width, int height) { }
+//
+//                       @Override
+//                       public void surfaceCreated(SurfaceHolder holder1) {
+//                           mp1.setDisplay(holder1);
+//                           mp1.start();
+//                       }
+//                       @Override
+//                       public void surfaceDestroyed(SurfaceHolder holder1) { }
+//                   });
+//                   txt.setText(t1);
+//                   txt1.setText("Me");
+//               }
+//               else{
+//
+//               }
+               //Approach 3 closing both camera and video and first try to render video
                if(count%2==0){
-                   mCameraDevice.close();
                    mp1.release();
-                   mSurfaceView = findViewById(R.id.videoView1);
+                   mCameraDevice.close();
 
-
-               }
-               else{
-
+                   mp1 = MediaPlayer.create(CameraHostActivity1.this, R.raw.usain_bolt);
+                   SurfaceView sv1 = (SurfaceView) findViewById(R.id.videoViewMain);
+                   SurfaceHolder holder1 = sv1.getHolder();
+                   mp1.setDisplay(holder1);
+                   mp1.start();
+                   txt.setText(t1);
+                   txt1.setText("Me");
                }
                count++;
            }
