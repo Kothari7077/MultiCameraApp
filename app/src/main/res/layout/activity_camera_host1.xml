@@ -7,24 +7,42 @@
     tools:context=".CameraHostActivity1"
     android:background="#8F000000">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Timepass_1.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Timepass_1.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <LinearLayout
         android:id="@+id/main_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="15dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="0.4">
 
 
         <SurfaceView
             android:id="@+id/videoViewMain"
             android:layout_width="match_parent"
-            android:layout_height="525dp" />
+            android:layout_height="440dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,17 +51,23 @@
 
             <TextView
                 android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
                 android:fontFamily="@font/bigshot_one"
+                android:gravity="center"
+                android:paddingStart="60dp"
                 android:text="Me"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="36sp" />
 
-<!--            <ImageView-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="match_parent" />-->
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_baseline_flip_camera_android_24" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,8 +91,9 @@
                     android:layout_width="100dp"
                     android:layout_height="25dp"
                     android:fontFamily="@font/bigshot_one"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:text="Device 1"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
             </LinearLayout>

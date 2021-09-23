@@ -2,16 +2,16 @@ package com.example.multicameraapp2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
@@ -19,11 +19,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -51,11 +52,14 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        this.mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewPreview);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("CLIENT");
+        this.mSurfaceView = findViewById(R.id.surfaceViewPreview);
         this.mSurfaceHolder = this.mSurfaceView.getHolder();
         this.mSurfaceHolder.addCallback(this);
         this.mCameraManager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
-
+        ImageView mImageView = findViewById(R.id.imageView);
         try {
             mCameraIDsList = this.mCameraManager.getCameraIdList();
             for (String id : mCameraIDsList) {
@@ -69,7 +73,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             public void onOpened(CameraDevice camera) {
                 mCameraDevice = camera;
                 mHandler.sendEmptyMessage(MSG_CAMERA_OPENED);
-                //check for swap camera here
             }
             @Override
             public void onDisconnected(CameraDevice camera) {
@@ -80,6 +83,83 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 Toast.makeText(getApplicationContext(), "onError", Toast.LENGTH_SHORT).show();
             }
         };
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(count%2!=0){
+                    mCameraDevice.close();
+                    mSurfaceView = findViewById(R.id.surfaceViewPreview);
+                    mSurfaceHolder = mSurfaceView.getHolder();
+                    mSurfaceHolder.addCallback(CameraActivity.this);
+                    try {
+                        mCameraIDsList = mCameraManager.getCameraIdList();
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
+                    }
+                    mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+                    mCameraStateCB = new CameraDevice.StateCallback() {
+                        @Override
+                        public void onOpened(CameraDevice camera) {
+                            mCameraDevice = camera;
+                            configureCamera();
+                        }
+
+                        @Override
+                        public void onDisconnected(CameraDevice camera) {
+                        }
+
+                        @Override
+                        public void onError(CameraDevice camera, int error) {
+                        }
+                    };
+                    if (ActivityCompat.checkSelfPermission(CameraActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    try {
+                        mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    mCameraDevice.close();
+                    mSurfaceView = findViewById(R.id.surfaceViewPreview);
+                    mSurfaceHolder = mSurfaceView.getHolder();
+                    mSurfaceHolder.addCallback(CameraActivity.this);
+                    try {
+                        mCameraIDsList = mCameraManager.getCameraIdList();
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
+                    }
+                    mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+                    mCameraStateCB = new CameraDevice.StateCallback() {
+                        @Override
+                        public void onOpened(CameraDevice camera) {
+                            mCameraDevice = camera;
+                            configureCamera();
+                        }
+
+                        @Override
+                        public void onDisconnected(CameraDevice camera) {
+                        }
+
+                        @Override
+                        public void onError(CameraDevice camera, int error) {
+                        }
+                    };
+                    if (ActivityCompat.checkSelfPermission(CameraActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    try {
+                        mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                count++;
+            }
+        });
     }
     @Override
     protected void onStart() {
@@ -201,4 +281,31 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_client, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void doThis(MenuItem item){
+        Intent i = new Intent(this, CasterActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
 }

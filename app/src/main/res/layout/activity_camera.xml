@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CameraActivity"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Timepass_1.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Timepass_1.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <SurfaceView
         android:id="@+id/surfaceViewPreview"
-        android:layout_width="382dp"
-        android:layout_height="641dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.258" />
+        android:layout_width="match_parent"
+        android:layout_height="620dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="270dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/bigshot_one"
-        android:text="Me"
-        android:textAlignment="center"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surfaceViewPreview"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:gravity="center"
+            android:id="@+id/text"
+            android:layout_width="10dp"
+            android:layout_weight="7"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bigshot_one"
+            android:text="Me"
+            android:paddingStart="60dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="36sp" />
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_baseline_flip_camera_android_24"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

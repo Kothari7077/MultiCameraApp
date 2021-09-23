@@ -1,6 +1,7 @@
 package com.example.multicameraapp2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -10,8 +11,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -26,6 +30,10 @@ public class SubscriberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subscriber);
         mStartDiscovery = (Button) findViewById(R.id.start_discovery);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Host");
+
         ArrayList<String> selecteditems = new ArrayList<>();
 
         mStartDiscovery.setOnClickListener(new View.OnClickListener() {
@@ -33,7 +41,7 @@ public class SubscriberActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Create and show the alert dialog
 
-                if(mStartDiscovery.getText().equals("START DISCOVERY")){
+                if(mStartDiscovery.getText().equals("Scan Nearby Devices")){
                     selecteditems.clear();
                     // Set up the alert builder
                     AlertDialog.Builder builder = new AlertDialog.Builder(SubscriberActivity.this);
@@ -61,7 +69,9 @@ public class SubscriberActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             // The user clicked OK
                             count = selecteditems.size();
-                            mStartDiscovery.setText("START CAMERA");
+                            if(count>0) {
+                                mStartDiscovery.setText("Start Camera");
+                            }
                         }
                     });
                     builder.setNegativeButton("Cancel", null);
@@ -69,7 +79,7 @@ public class SubscriberActivity extends AppCompatActivity {
                     dialog.show();
                     setButtonSize(dialog);
 
-                }else if(mStartDiscovery.getText().equals("START CAMERA")){
+                }else if(mStartDiscovery.getText().equals("Start Camera")){
                     if (hasCameraPermission()) {
 
                         if(count==3){
@@ -89,7 +99,7 @@ public class SubscriberActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else{
-                            mStartDiscovery.setText("START DISCOVERY");
+                            mStartDiscovery.setText("Scan Nearby Devices");
                         }
                     } else {
                         requestPermission();
@@ -97,27 +107,19 @@ public class SubscriberActivity extends AppCompatActivity {
                 }
             }
         });
-        mUnregisterSubscriber = (Button) findViewById(R.id.unregister_subsrciber);
-        mUnregisterSubscriber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mStartDiscovery.setText("START DISCOVERY");
-            }
-        });
+
     }
 
     private void setButtonSize(AlertDialog dialog) {
         Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button button1 = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) button.getLayoutParams();
+        layoutParams.weight = 10;
+        button.setLayoutParams(layoutParams);
+        button1.setLayoutParams(layoutParams);
         int i = getResources().getColor(R.color.blue);
         button.setTextColor(i);
         button1.setTextColor(i);
-        int height = getResources().getDimensionPixelSize(R.dimen.alertdialog_button_height);
-        int width  = getResources().getDimensionPixelSize(R.dimen.alertdialog_button_width);
-        button.setHeight(height);
-        button.setWidth(width);
-        button1.setHeight(height);
-        button1.setWidth(width);
     }
     private boolean hasCameraPermission() {
         return ContextCompat.checkSelfPermission(
@@ -131,5 +133,31 @@ public class SubscriberActivity extends AppCompatActivity {
                 CAMERA_PERMISSION,
                 CAMERA_REQUEST_CODE
         );
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_host_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void doThis(MenuItem item){
+        Intent i = new Intent(this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 }

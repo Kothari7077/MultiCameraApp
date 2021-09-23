@@ -2,11 +2,13 @@ package com.example.multicameraapp2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -18,10 +20,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +37,7 @@ import java.util.List;
 public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHolder.Callback, Handler.Callback{
     MediaPlayer mp,mp2,mp3,mp1;
     int arr[]={1,2,3,4};
+    int camera_count=0;
     TextView txt,txt1,txt2,txt3;
     static final String TAG = "CamTest";
     static final int MY_PERMISSIONS_REQUEST_CAMERA = 1242;
@@ -67,6 +73,11 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
         txt1.setText(t1);
         txt2.setText(t2);
         txt3.setText(t3);
+        ImageView mImageView = findViewById(R.id.imageView1);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Host");
 
         this.mSurfaceView =  findViewById(R.id.videoViewMain);
         this.mSurfaceHolder = this.mSurfaceView.getHolder();
@@ -156,8 +167,14 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                 int temp,temp1;
                 temp=arr[0];
                 temp1=arr[1];
+                if(arr[0]==1){
+                    mImageView.setVisibility(View.INVISIBLE);
+                }
                 arr[1]=arr[0];
                 arr[0]=temp1;
+                if(arr[0]==1){
+                    mImageView.setVisibility(View.VISIBLE);
+                }
                 switch(arr[0]){
                     case 1:
                         if(temp==2){
@@ -192,7 +209,12 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                             return;
                         }
                         try {
-                            mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            if(camera_count%2==0){
+                                mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            }
+                            else {
+                                mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                            }
                         } catch (CameraAccessException e) {
                             e.printStackTrace();
                         }
@@ -277,7 +299,12 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                             return;
                         }
                         try {
-                            mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            if(camera_count%2==0){
+                                mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            }
+                            else {
+                                mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                            }
                         } catch (CameraAccessException e) {
                             e.printStackTrace();
                         }
@@ -317,8 +344,14 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                 int temp,temp1;
                 temp=arr[0];
                 temp1=arr[2];
+                if(arr[0]==1){
+                    mImageView.setVisibility(View.INVISIBLE);
+                }
                 arr[2]=arr[0];
                 arr[0]=temp1;
+                if(arr[0]==1){
+                    mImageView.setVisibility(View.VISIBLE);
+                }
                 switch(arr[0]){
                     case 1:
                         if(temp==2){
@@ -353,7 +386,12 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                             return;
                         }
                         try {
-                            mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            if(camera_count%2==0){
+                                mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            }
+                            else {
+                                mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                            }
                         } catch (CameraAccessException e) {
                             e.printStackTrace();
                         }
@@ -439,7 +477,12 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                             return;
                         }
                         try {
-                            mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            if(camera_count%2==0){
+                                mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            }
+                            else {
+                                mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                            }
                         } catch (CameraAccessException e) {
                             e.printStackTrace();
                         }
@@ -480,8 +523,14 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                 int temp,temp1;
                 temp=arr[0];
                 temp1=arr[3];
+                if(arr[0]==1){
+                    mImageView.setVisibility(View.INVISIBLE);
+                }
                 arr[3]=arr[0];
                 arr[0]=temp1;
+                if(arr[0]==1){
+                    mImageView.setVisibility(View.VISIBLE);
+                }
                 switch(arr[0]){
                     case 1:
                         if(temp==2){
@@ -516,7 +565,12 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                             return;
                         }
                         try {
-                            mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            if(camera_count%2==0){
+                                mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            }
+                            else {
+                                mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                            }
                         } catch (CameraAccessException e) {
                             e.printStackTrace();
                         }
@@ -601,7 +655,12 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                             return;
                         }
                         try {
-                            mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            if(camera_count%2==0){
+                                mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                            }
+                            else {
+                                mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                            }
                         } catch (CameraAccessException e) {
                             e.printStackTrace();
                         }
@@ -632,6 +691,88 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                         mp3.start();
                         txt3.setText(t3);
                         break;
+                }
+            }
+        });
+
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arr[0]==1){
+                    if(camera_count%2==0){
+                        mCameraDevice.close();
+                        mSurfaceView = findViewById(R.id.videoViewMain);
+                        mSurfaceHolder = mSurfaceView.getHolder();
+                        mSurfaceHolder.addCallback(CameraHostActivity3.this);
+                        try {
+                            mCameraIDsList = mCameraManager.getCameraIdList();
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+                        mCameraStateCB = new CameraDevice.StateCallback() {
+                            @Override
+                            public void onOpened(CameraDevice camera) {
+                                mCameraDevice = camera;
+                                configureCamera();
+                            }
+
+                            @Override
+                            public void onDisconnected(CameraDevice camera) {
+                            }
+
+                            @Override
+                            public void onError(CameraDevice camera, int error) {
+                            }
+                        };
+                        if (ActivityCompat.checkSelfPermission(CameraHostActivity3.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        try {
+                            mCameraManager.openCamera(mCameraIDsList[1], mCameraStateCB, new Handler());
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        mCameraDevice.close();
+                        mSurfaceView = findViewById(R.id.videoViewMain);
+                        mSurfaceHolder = mSurfaceView.getHolder();
+                        mSurfaceHolder.addCallback(CameraHostActivity3.this);
+                        try {
+                            mCameraIDsList = mCameraManager.getCameraIdList();
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+                        mCameraStateCB = new CameraDevice.StateCallback() {
+                            @Override
+                            public void onOpened(CameraDevice camera) {
+                                mCameraDevice = camera;
+                                configureCamera();
+                            }
+
+                            @Override
+                            public void onDisconnected(CameraDevice camera) {
+                            }
+
+                            @Override
+                            public void onError(CameraDevice camera, int error) {
+                            }
+                        };
+                        if (ActivityCompat.checkSelfPermission(CameraHostActivity3.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        try {
+                            mCameraManager.openCamera(mCameraIDsList[0], mCameraStateCB, new Handler());
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    camera_count++;
+                }
+                else{
+
                 }
             }
         });
@@ -790,5 +931,31 @@ public class CameraHostActivity3 extends AppCompatActivity implements SurfaceHol
                 e.printStackTrace();
             }
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_host, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void doThis(MenuItem item){
+        Intent i = new Intent(this, SubscriberActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 }

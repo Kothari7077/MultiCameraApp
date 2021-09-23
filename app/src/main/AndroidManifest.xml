@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MultiCameraApp2.NoActionBar">
+
         <activity android:name=".HomeScreen"></activity>
         <activity android:name=".CameraHostActivity3"></activity>
         <activity android:name=".CameraHostActivity2"></activity>
